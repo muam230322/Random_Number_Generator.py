@@ -1,0 +1,83 @@
+'''
+import  random  # random module generates a random float number
+Cnum=random.randrange(1,10)
+input=int(input("enter the number:"))
+if input>Cnum:
+    print("comp num ", Cnum)
+    print("your guess num is high")
+elif Cnum>input:
+    print("comp num ", Cnum)
+    print("your guess num is low")
+else:
+    print("comp num ", Cnum)
+    print("correct guess!!")          '''
+
+#import modules
+from tkinter import *                 #tkinter for GUI
+from tkinter import messagebox        #generate a pop up msg 
+from random import randint            #random module generates a random float number
+
+
+# Screen
+root = Tk()   #screen (built in fun) creates a screen in tkinter 
+root.geometry("500x500")
+root.title("Random Number Generator Game")   #project root name
+root.configure(background="pink")            #screen color - Pink
+
+
+
+# Generate Number Function
+def GenerateNumberFunc():
+    global Number        
+  
+    Number = randint(1, 10)           # Generate Number
+    messagebox.showinfo("A Number was Generated!", "Please Guess the Number")  # MessageBox to show that a number was generated
+
+# Guess Number Function
+def GuessNumberFunc():
+    global Number
+    UserResponse = AnswerEntry.get()   # Get Value from Answer Entry Box
+    UserResponse = int(UserResponse)   # Convert Value from Answer Entry Box to a Number
+    
+
+    # Check if the User Response was higher, lower, or equal to the correct number
+    if UserResponse > Number:
+        ResultLabel.config(text="Incorrect! Please Guess Lower", bg="pink",fg="Red")
+    elif UserResponse < Number:
+        ResultLabel.config(text="Incorrect! Please Guess Higher", bg="pink",fg="Red")
+    else:
+        ResultLabel.config(text=" Yaah!!  You Guess Correct The Number was {}".format(Number),bg="pink", fg="Green")
+        AnswerEntry.delete(0, "end")
+
+
+
+# Title
+Title = Label(root, text="Number Guessing Game", font=("Arial", 30),bg="pink")  
+Title.pack()   #displays title on the screen
+
+# Main Frame
+MainFrame = Frame(root,bg="white")
+MainFrame.pack(pady=60)  #padding wrt title y-axis=60 px down 
+
+# Guess the Number Label
+GuessNumLabel = Label(MainFrame, text="Guess a number from 1 to 10:", font=("Arial", 20))
+GuessNumLabel.pack()
+
+# Answer Entry
+AnswerEntry = Entry(MainFrame, font=("Arial", 16))   #enter user answer field
+AnswerEntry.pack(pady=10)
+
+# Generate Number Button
+GenerateNumberBtn = Button(MainFrame, text="Generate Number", width=16, font=("Arial", 16), background="Dodgerblue", command=GenerateNumberFunc)   #command is a fun() call
+GenerateNumberBtn.pack()
+# Guess Button
+GuessBtn = Button(MainFrame, text="Guess", width=16, font=("Arial", 16), background="#15e650", command=GuessNumberFunc)    #command is a fun() call
+GuessBtn.pack(pady=5)
+
+
+# Result Label
+ResultLabel = Label(MainFrame, text="", font=("Arial", 16))
+ResultLabel.pack()
+
+# Mainloop
+root.mainloop()
